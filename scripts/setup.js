@@ -37,38 +37,61 @@ pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}
 
 fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
 
+// Look for the service account file
+let serviceKeyPath = null
+fs.readdirSync(process.cwd()).forEach(filepath => {
+  if (fs.extname(filepath).toLowerCase() === '.json') {
+    let filename = path.basename(filepath, '.json')
+    if (['package', 'firebase'].indexOf(filename) < 0) {
+      serviceKeyPath = path.resolve(filepath)
+    }
+  }
+})
+
+if (serviceKeyPath === null) {
+  let fp = path.join(process.cwd(), '.firebase_credentials.json')
+  fs.writeFileSync(fp, JSON.stringify({
+    "type": "service_account",
+    "project_id": "fill_me_in",
+    "private_key_id": "fill_me_in",
+    "private_key": "fill_me_in",
+    "client_email": "fill_me_in",
+    "client_id": "fill_me_in",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "fill_me_in"
+  }, null, 2))
+
+  serviceKeyPath = fp
+}
+
+// Make sure the env.json file exists for local dev
+currentPath = path.join(process.cwd(), 'env.json')
+
+let env = {}
+
+if (fs.existsSync(currentPath)) {
+  env = require(currentPath)
+}
+
+env.GOOGLE_APPLICATION_CREDENTIALS = serviceKeyPath
+fs.writeFileSync(currentPath, JSON.stringify(env, null, 2))
+
 // Setup the base file
 currentPath = path.join(process.cwd(), 'index.js')
 
 if (!fs.existsSync(currentPath)) {
-  let content = `const functions = require('firebase-functions')
-const fs = require('fs')
-const path = require('path')
+  let content = `const FirebaseAPI = require('@butlerlogic/firebase-api')
 
-if (process.argv.filter(arg => arg.toLowerCase().indexOf('emulator') >= 0).length > 0) {
-  console.log('\n\n<<<<<<<<< Launching in emulator mode >>>>>>>>>\n\n')
-  require('localenvironment')
-}
-
-// Make the admin available to all endpoints
-global.admin = require('firebase-admin')
-admin.initializeApp()
-
-fs.readdirSync(process.cwd()).forEach(location => {
-  if (!location.startsWith('.') && !location.startsWith('_')) {
-    location = path.resolve(location)
-
-    if (fs.statSync(location).isDirectory() && path.dirname(location).toLowerCase() !== 'node_modules') {
-      fs.readdirSync(location).forEach(filepath => {
-        filepath = path.join(location, filepath)
-
-        if (fs.statSync(filepath).isFile() && path.extname(filepath).toLowerCase() === '.js') {
-          Object.assign(exports, require(filepath))
-        }
-      })
-    }
-  }
-})`.trim()
+// Create the following global references:
+// - functions: Reference to the firebase-functions module
+// - admin: Reference to a preauthorized firebase admin SDK instance.
+// Remember to examine the env.json file to assure the appropriate
+// service key file is used.
+FirebaseAPI.init()
+FirebaseAPI.setup()
+`.trim()
 
   fs.writeFileSync(currentPath, content)
 
@@ -81,7 +104,7 @@ fs.readdirSync(process.cwd()).forEach(location => {
   if (!fs.existsSync(path.join(apiPath, 'routes.js'))) {
     fs.writeFileSync(path.join(apiPath, 'routes.js'), `const functions = require('firebase-functions')
 const express = require('express')
-const API = require('@ecor/common-api')
+const API = require('@butlerlogic/firebase-api').API // Reference to @ecor/common-api module.
 const app = express()
 
 API.applySimpleCORS(app)
