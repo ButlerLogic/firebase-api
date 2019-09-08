@@ -8,7 +8,7 @@ const path = require('path')
 const prefix = process.cwd() //, '../../../')
 
 switch (cmd.trim().toLowerCase()) {
-  case 'setup':
+  case 'init':
     // Setup dependencies
     let currentPath = path.join(prefix, 'package.json')
     let pkg
@@ -139,5 +139,5 @@ module.exports = { api }
   default:
     console.log('Usage: api <cmd>\n\n')
     console.log('Commands:\n')
-    console.log('\tsetup:\tSetup the shell of an API.')
+    console.log('\tinit:\tInitialize an API shell.')
 }
