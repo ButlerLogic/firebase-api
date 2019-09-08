@@ -22,7 +22,7 @@ switch (cmd.trim().toLowerCase()) {
         private: true,
         description: "Cloud Functions for Firebase",
         engines: {
-          node: '8'
+          node: '10'
         }
       }
     }
@@ -44,6 +44,7 @@ switch (cmd.trim().toLowerCase()) {
     pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
     pkg.dependencies['@butlerlogic/firebase'] = `^${modPkg.dependencies['@butlerlogic/firebase']}`.replace(/\^+/gi, '^')
     delete pkg.devDependencies['@butlerlogic/firebase']
+    delete pkg.devDependencies['@butlerlogic/firebase-api']
     pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
     pkg.dependencies['firebase-admin'] = `^${modPkg.dependencies['firebase-admin']}`.replace(/\^+/gi, '^')
     pkg.dependencies['firebase-functions'] = `^${modPkg.dependencies['firebase-functions']}`.replace(/\^+/gi, '^')
