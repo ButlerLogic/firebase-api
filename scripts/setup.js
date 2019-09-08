@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const prefix = process.cwd()
+const prefix = path.join(process.cwd(), '../../../')
 
 console.log(`Running in ${prefix}`)
 
@@ -46,7 +46,7 @@ fs.readdirSync(prefix).forEach(filepath => {
   if (path.extname(filepath).toLowerCase() === '.json') {
     let filename = path.basename(filepath, '.json')
     if (['package', 'firebase'].indexOf(filename) < 0) {
-      serviceKeyPath = path.resolve(filepath)
+      serviceKeyPath = filepath
     }
   }
 })

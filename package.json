@@ -1,6 +1,6 @@
 {
   "name": "@butlerlogic/firebase-api",
-  "version": "1.0.2-beta.10",
+  "version": "1.0.2-beta.11",
   "description": "A boilerplate structure for building an HTTP API using Firebase functions.",
   "main": "index.js",
   "scripts": {
