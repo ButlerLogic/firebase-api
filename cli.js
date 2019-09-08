@@ -52,7 +52,7 @@ switch (cmd.trim().toLowerCase()) {
     fs.readdirSync(prefix).forEach(filepath => {
       if (path.extname(filepath).toLowerCase() === '.json') {
         let filename = path.basename(filepath, '.json')
-        if (['package', 'firebase'].indexOf(filename) < 0) {
+        if (['package', 'package-lock', 'firebase'].indexOf(filename) < 0 && filename.indexOf('fire') !== 0) {
           serviceKeyPath = filepath
         }
       }
