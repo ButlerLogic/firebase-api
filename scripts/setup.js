@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const prefix = path.join(process.cwd(), '../../../')
-
-console.log(`Running in ${prefix}`)
+const prefix = process.cwd()//, '../../../')
 
 // Setup dependencies
 let currentPath = path.join(prefix, 'package.json')
@@ -11,15 +9,7 @@ let pkg
 if (fs.existsSync(currentPath)) {
   pkg = require(currentPath)
 } else {
-  pkg = {
-    name: path.basename(prefix),
-    version: '1.0.0-alpha.1',
-    private: true,
-    description: "Cloud Functions for Firebase",
-    engines: {
-      node: '8'
-    }
-  }
+  throw new Error(`Cannot find ${currentPath} file.`)
 }
 
 pkg.scripts = pkg.scripts || {}
