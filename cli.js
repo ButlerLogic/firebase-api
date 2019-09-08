@@ -43,6 +43,7 @@ switch (cmd.trim().toLowerCase()) {
     pkg.devDependencies = pkg.devDependencies || {}
     pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
     pkg.dependencies['@butlerlogic/firebase'] = `^${modPkg.dependencies['@butlerlogic/firebase']}`.replace(/\^+/gi, '^')
+    delete pkg.devDependencies['@butlerlogic/firebase']
     pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
     pkg.dependencies['firebase-admin'] = `^${modPkg.dependencies['firebase-admin']}`.replace(/\^+/gi, '^')
     pkg.dependencies['firebase-functions'] = `^${modPkg.dependencies['firebase-functions']}`.replace(/\^+/gi, '^')
