@@ -14,6 +14,7 @@ if (fs.existsSync(currentPath)) {
   throw new Error(`Cannot find ${currentPath} file.`)
 }
 
+pkg.scripts = pkg.scripts || {}
 pkg.scripts.init = 'api init'
 
 fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
