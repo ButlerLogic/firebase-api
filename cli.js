@@ -42,7 +42,7 @@ switch (cmd.trim().toLowerCase()) {
     let modPkg = require(path.join(__dirname, 'package.json'))
     pkg.devDependencies = pkg.devDependencies || {}
     pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
-    pkg.dependencies = Object.assign(pkg.dependencies, modPkg.devDependencies)
+    pkg.dependencies['@butlerlogic/firebase'] = `^${modPkg.dependencies['@butlerlogic/firebase']}`.replace(/\^+/gi, '^')
     pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
     pkg.dependencies['firebase-admin'] = `^${modPkg.dependencies['firebase-admin']}`.replace(/\^+/gi, '^')
     pkg.dependencies['firebase-functions'] = `^${modPkg.dependencies['firebase-functions']}`.replace(/\^+/gi, '^')
