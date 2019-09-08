@@ -40,7 +40,7 @@ fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
 // Look for the service account file
 let serviceKeyPath = null
 fs.readdirSync(process.cwd()).forEach(filepath => {
-  if (fs.extname(filepath).toLowerCase() === '.json') {
+  if (path.extname(filepath).toLowerCase() === '.json') {
     let filename = path.basename(filepath, '.json')
     if (['package', 'firebase'].indexOf(filename) < 0) {
       serviceKeyPath = path.resolve(filepath)
