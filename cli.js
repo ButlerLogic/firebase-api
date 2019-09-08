@@ -5,7 +5,7 @@ let cmd = args.shift()
 
 const fs = require('fs')
 const path = require('path')
-const prefix = path.resolve(process.cwd(), '../../../')
+const prefix = process.cwd() //, '../../../')
 
 switch (cmd.trim().toLowerCase()) {
   case 'init':

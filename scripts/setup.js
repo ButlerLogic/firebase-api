@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const prefix = process.cwd()//, '../../../')
+const prefix = path.join(process.cwd(), '../../../')
 
 console.log(`Running in ${prefix}`)
 
