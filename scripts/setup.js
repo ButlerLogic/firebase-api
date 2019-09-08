@@ -31,7 +31,7 @@ pkg.scripts = Object.assign(pkg.scripts, {
 })
 
 let modPkg = require('./package.json')
-pkg.devDependencies = pkg.devDependencies || {})
+pkg.devDependencies = pkg.devDependencies || {}
 pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
 pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
 
