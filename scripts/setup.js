@@ -37,6 +37,7 @@ let modPkg = require(path.join(__dirname, '..', 'package.json'))
 pkg.devDependencies = pkg.devDependencies || {}
 pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
 pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
+pkg.dependencies['firebase-admin'] = `^${modPkg.dependencies['firebase-admin']}`.replace(/\^+/gi, '^')
 
 fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
 
@@ -105,8 +106,7 @@ FirebaseAPI.setup()
   }
 
   if (!fs.existsSync(path.join(apiPath, 'routes.js'))) {
-    fs.writeFileSync(path.join(apiPath, 'routes.js'), `const functions = require('firebase-functions')
-const express = require('express')
+    fs.writeFileSync(path.join(apiPath, 'routes.js'), `const express = require('express')
 const API = require('@butlerlogic/firebase-api').API // Reference to @ecor/common-api module.
 const app = express()
 
@@ -118,6 +118,7 @@ app.get('/hello', API.reply({
   action: 'Check out the /info endpoint. It has useful details about this API.'
 }))
 
+// functions is made available globally in the index.js file (init method)
 const api = functions.https.onRequest(app)
 
 module.exports = { api }
