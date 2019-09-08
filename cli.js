@@ -5,7 +5,7 @@ let cmd = args.shift()
 
 const fs = require('fs')
 const path = require('path')
-const prefix = path.join(process.cwd() , '../../')
+const prefix = process.cwd() //, '../../../')
 
 switch (cmd.trim().toLowerCase()) {
   case 'init':
@@ -38,7 +38,7 @@ switch (cmd.trim().toLowerCase()) {
       setup: 'fb setup'
     })
 
-    let modPkg = require(path.join(__dirname, '..', 'package.json'))
+    let modPkg = require(path.join(__dirname, 'package.json'))
     pkg.devDependencies = pkg.devDependencies || {}
     pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
     pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')

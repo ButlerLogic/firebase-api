@@ -15,6 +15,6 @@ if (fs.existsSync(currentPath)) {
 }
 
 pkg.scripts = pkg.scripts || {}
-pkg.scripts.init = 'api init'
+pkg.scripts.init = 'api init && npm i'
 
 fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
