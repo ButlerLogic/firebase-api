@@ -6,7 +6,7 @@ let currentPath = path.join(process.cwd(), 'package.json')
 let pkg
 
 if (fs.existsSync(currentPath)) {
-  pkg = require(currentPath))
+  pkg = require(currentPath)
 } else {
   pkg = {
     name: path.basename(process.cwd()),
