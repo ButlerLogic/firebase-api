@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 // Setup dependencies
-let currentPath = path.join(process.cwd(), 'package.json')
+let currentPath = path.resolve('./package.json')
 let pkg
 
 if (fs.existsSync(currentPath)) {
@@ -39,7 +39,7 @@ fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
 
 // Look for the service account file
 let serviceKeyPath = null
-fs.readdirSync(process.cwd()).forEach(filepath => {
+fs.readdirSync(path.resolve('./')).forEach(filepath => {
   if (path.extname(filepath).toLowerCase() === '.json') {
     let filename = path.basename(filepath, '.json')
     if (['package', 'firebase'].indexOf(filename) < 0) {
@@ -49,7 +49,7 @@ fs.readdirSync(process.cwd()).forEach(filepath => {
 })
 
 if (serviceKeyPath === null) {
-  let fp = path.join(process.cwd(), '.firebase_credentials.json')
+  let fp = path.resolve('./.firebase_credentials.json')
   fs.writeFileSync(fp, JSON.stringify({
     "type": "service_account",
     "project_id": "fill_me_in",
@@ -67,7 +67,7 @@ if (serviceKeyPath === null) {
 }
 
 // Make sure the env.json file exists for local dev
-currentPath = path.join(process.cwd(), 'env.json')
+currentPath = path.resolve('./env.json')
 
 let env = {}
 
@@ -79,7 +79,7 @@ env.GOOGLE_APPLICATION_CREDENTIALS = serviceKeyPath
 fs.writeFileSync(currentPath, JSON.stringify(env, null, 2))
 
 // Setup the base file
-currentPath = path.join(process.cwd(), 'index.js')
+currentPath = path.resolve('./index.js')
 
 if (!fs.existsSync(currentPath)) {
   let content = `const FirebaseAPI = require('@butlerlogic/firebase-api')
