@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 class API {
-  static init () {
+  init () {
     if (process.argv.filter(arg => arg.toLowerCase().indexOf('emulator') >= 0).length > 0) {
       console.log('\n\n<<<<<<<<< Launching in emulator mode >>>>>>>>>\n\n')
       require('localenvironment')
@@ -14,7 +14,7 @@ class API {
     admin.initializeApp()
   }
 
-  static setup () {
+  setup () {
     fs.readdirSync(process.cwd()).forEach(location => {
       if (!location.startsWith('.') && !location.startsWith('_')) {
         location = path.resolve(location)
