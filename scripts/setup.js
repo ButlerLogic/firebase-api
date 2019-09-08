@@ -38,6 +38,7 @@ pkg.devDependencies = pkg.devDependencies || {}
 pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
 pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
 pkg.dependencies['firebase-admin'] = `^${modPkg.dependencies['firebase-admin']}`.replace(/\^+/gi, '^')
+pkg.dependencies['firebase-functions'] = `^${modPkg.dependencies['firebase-functions']}`.replace(/\^+/gi, '^')
 
 fs.writeFileSync(currentPath, JSON.stringify(pkg, null, 2))
 
