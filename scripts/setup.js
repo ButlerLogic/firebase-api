@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-const prefix = __dirname
+const prefix = process.cwd()
+
+console.log(`Running in ${prefix}`)
 
 // Setup dependencies
 let currentPath = path.join(prefix, 'package.json')
