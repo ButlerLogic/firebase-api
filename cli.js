@@ -103,8 +103,12 @@ switch (cmd.trim().toLowerCase()) {
 // - admin: Reference to a preauthorized firebase admin SDK instance.
 // Remember to examine the env.json file to assure the appropriate
 // service key file is used.
+
+// Initialize the API with the appropriate credentials.
 FirebaseAPI.init()
-FirebaseAPI.setup()
+
+// Assign the FirebaseAPI exports to the main exports
+Object.assign(exports, FirebaseAPI.exports)
 `.trim()
 
       fs.writeFileSync(currentPath, content)

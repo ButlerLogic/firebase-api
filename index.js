@@ -14,7 +14,9 @@ class API {
     admin.initializeApp()
   }
 
-  setup () {
+  get exports() {
+    let exportable = {}
+
     fs.readdirSync(process.cwd()).forEach(location => {
       if (!location.startsWith('.') && !location.startsWith('_')) {
         location = path.resolve(location)
@@ -24,12 +26,14 @@ class API {
             filepath = path.join(location, filepath)
 
             if (fs.statSync(filepath).isFile() && path.extname(filepath).toLowerCase() === '.js') {
-              Object.assign(exports, require(filepath))
+              Object.assign(exportable, require(filepath))
             }
           })
         }
       }
     })
+
+    return exportable
   }
 
   get API () {
