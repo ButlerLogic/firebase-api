@@ -43,3 +43,11 @@ The `init` command performs the following actions:
   - `npm run configure`: This will configure the environment variables on the Firebase server using the values found in the `.runtimeconfig.json` file.
   - `npm run configure:debug`: Same as above, but it will print the configuration command to the screen in plaintext. THIS MAY EXPOSE SENSISTIVE CONTENT, so don't use this on a CI server or other remote environment. Only use it when working on your local workstation.
   - `npm run deploy`: This runs the configure function, then the firebase deploy command (functions only).
+
+**1. Adds required dependencies:**
+  Firebase requires certain dependencies to exist in order to run functions locally. These are automatically added to the `package.json` file if they do not already exist.
+
+**1. Runs `npm install`**
+  Since new dependencies are added, a final npm installation is executed to assure all necessary dependencies exist.
+
+You can immediately start experimenting with the API by modifying the `api/routes.js` file and running `npm start` to launch the local Firebase function emulator.
