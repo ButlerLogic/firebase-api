@@ -30,7 +30,7 @@ pkg.scripts = Object.assign(pkg.scripts, {
   setup: 'fb setup'
 })
 
-let modPkg = require('./package.json')
+let modPkg = require(path.join(__dirname, '..', 'package.json'))
 pkg.devDependencies = pkg.devDependencies || {}
 pkg.devDependencies[modPkg.name] = `^${modPkg.version}`
 pkg.dependencies['localenvironment'] = `^${modPkg.dependencies.localenvironment}`.replace(/\^+/gi, '^')
