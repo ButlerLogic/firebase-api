@@ -6,6 +6,20 @@ class API {
     if (process.argv.filter(arg => arg.toLowerCase().indexOf('emulator') >= 0).length > 0) {
       console.log('\n\n<<<<<<<<< Launching in emulator mode >>>>>>>>>\n\n')
       require('localenvironment')
+
+      if (process.env.hasOwnProperty('GOOGLE_APPLICATION_CREDENTIALS')) {
+        try {
+          let content = require(process.env.GOOGLE_APPLICATION_CREDENTIALS)
+
+          if (content.private_key.trim().indexOf('-----BEGIN PRIVATE KEY-----') !== 0) {
+            delete process.env.GOOGLE_APPLICATION_CREDENTIALS
+            console.log('\n\nPRIVATE KEY NOT FOUND.\nFirebase admin connection may be invalid without proper credentials.\n\n')
+          }
+        } catch (e) {
+          delete process.env.GOOGLE_APPLICATION_CREDENTIALS
+          console.log('\n\nPRIVATE KEY NOT FOUND.\nFirebase admin connection may be invalid without proper credentials.\n\n')
+        }
+      }
     }
 
     // Make the admin available to all endpoints
