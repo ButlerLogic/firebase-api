@@ -29,7 +29,7 @@ switch (cmd.trim().toLowerCase()) {
 
     pkg.scripts = pkg.scripts || {}
     pkg.scripts = Object.assign(pkg.scripts, {
-      serve: 'firebase serve --only functions,database',
+      serve: 'firebase serve --only functions',
       shell: 'firebase functions:shell',
       start: 'firebase emulators:start --only functions',
       logs: 'firebase functions:log',
@@ -121,7 +121,7 @@ Object.assign(exports, FirebaseAPI.exports)
 
       if (!fs.existsSync(path.join(apiPath, 'routes.js'))) {
         fs.writeFileSync(path.join(apiPath, 'routes.js'), `const express = require('express')
-const API = require('@butlerlogic/firebase-api').API // Reference to @ecor/common-api module.
+const API = require('@butlerlogic/common-api')
 const app = express()
 
 API.applySimpleCORS(app)

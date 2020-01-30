@@ -1,6 +1,6 @@
 {
   "name": "@butlerlogic/firebase-api",
-  "version": "1.0.9-beta.1",
+  "version": "1.0.9",
   "description": "A boilerplate structure for building an HTTP API using Firebase functions.",
   "main": "index.js",
   "scripts": {
@@ -30,10 +30,9 @@
   },
   "homepage": "https://github.com/ButlerLogic/firebase-api#readme",
   "dependencies": {
-    "@ecor/common-api": "^1.0.6",
-    "firebase-admin": "^8.5.0",
-    "firebase-functions": "^3.2.0",
-    "localenvironment": "^1.0.2",
-    "@butlerlogic/firebase": "^1.0.0"
+    "firebase-admin": "8.9.2",
+    "firebase-functions": "3.3.0",
+    "localenvironment": "1.1.0",
+    "@butlerlogic/firebase": "1.0.1"
   }
 }

@@ -12,12 +12,12 @@ class API {
           let content = require(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 
           if (content.private_key.trim().indexOf('-----BEGIN PRIVATE KEY-----') !== 0) {
+            console.log(`PRIVATE KEY NOT FOUND IN ${process.env.GOOGLE_APPLICATION_CREDENTIALS}.\nFirebase admin connection may be invalid without proper credentials.\n\n`)
             delete process.env.GOOGLE_APPLICATION_CREDENTIALS
-            console.log('\n\nPRIVATE KEY NOT FOUND.\nFirebase admin connection may be invalid without proper credentials.\n\n')
           }
         } catch (e) {
+          console.log(`PRIVATE KEY NOT FOUND IN ${process.env.GOOGLE_APPLICATION_CREDENTIALS}.\nFirebase admin connection may be invalid without proper credentials.\n\n`)
           delete process.env.GOOGLE_APPLICATION_CREDENTIALS
-          console.log('\n\nPRIVATE KEY NOT FOUND.\nFirebase admin connection may be invalid without proper credentials.\n\n')
         }
       }
     }
@@ -48,10 +48,6 @@ class API {
     })
 
     return exportable
-  }
-
-  get API () {
-    return require('@ecor/common-api')
   }
 }
 

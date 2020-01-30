@@ -1,0 +1,53 @@
+name: Tag, Release, Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Tag
+      id: autotagger
+      uses: butlerlogic/action-autotag@stable
+      with:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    
+    - name: Pre-release
+      if: steps.autotagger.outputs.tagname != ''
+      run: |
+        if [[ "${{ steps.autotagger.output.version }}" == *"-"* ]]; then echo "::set-env IS_PRERELEASE=true";else echo "::set-env IS_PRERELEASE=''";fi
+
+    - name: Release
+      id: release
+      if: steps.autotagger.outputs.tagname != ''
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.autotagger.outputs.tagname }}
+        release_name: Version ${{ steps.autotagger.outputs.version }}
+        body: ${{ steps.autotagger.outputs.tagmessage }}
+        draft: false
+        prerelease: env.IS_PRERELEASE != ''
+
+    - name: Publish
+      id: publish
+      if: steps.autotagger.outputs.tagname != ''
+      uses: author/action-publish@master
+      env:
+        REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        ACTIONS_STEP_DEBUG: true
+
+    - name: Rollback
+      if: failure()
+      uses: author/action-rollback@stable
+      with:
+        release_id: ${{ steps.release.outputs.id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
